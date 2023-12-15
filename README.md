@@ -7,6 +7,8 @@
 
 法政大学の学習支援システム、Hoppii のアプリです。大学の許可を得る上の自主制作です。
 
+ここからダウンロードできます：[release](https://github.com/megabitsenmzq/Hosei-Sakai-Android/releases)
+
 iOS 版はこちら：[GitHub](https://github.com/megabitsenmzq/Hosei-Sakai-iOS)
 
 ## 機能詳細
