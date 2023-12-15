@@ -3,7 +3,7 @@
 [![Kotlin Badge](https://img.shields.io/badge/Kotlin-1.9-7F52FF?logo=kotlin&logoColor=fff&style=flat)](https://kotlinlang.org)
 [![License GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg?style=flat)](https://www.gnu.org/licenses/gpl-3.0.html)
 
-![icon](assets/icon.png)
+![icon](assets/Icon.png)
 
 法政大学の学習支援システム、Hoppii のアプリです。大学の許可を得る上の自主制作です。
 
