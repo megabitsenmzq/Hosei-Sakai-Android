@@ -13,6 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
+import androidx.webkit.WebViewFeature.isFeatureSupported
 import com.jinyumeng.hosei_sakai.hoppii.HoppiiURLs
 import com.jinyumeng.hosei_sakai.hoppii.LoginManager
 import kotlinx.coroutines.Dispatchers
@@ -53,6 +56,9 @@ fun TimetableView(modifier: Modifier = Modifier) {
 
     AndroidView(factory = { context ->
         WebView(context).apply {
+            if (isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, true)
+            }
             layoutParams = ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT

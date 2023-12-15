@@ -13,6 +13,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
 import com.jinyumeng.hosei_sakai.hoppii.remote.announcements.AnnouncementItem
 import com.jinyumeng.hosei_sakai.views.common.AttachmentItemView
 
@@ -32,6 +34,9 @@ fun AnnouncementDetailView(announcement: AnnouncementItem, navController: NavCon
             AndroidView(
                 factory = { context ->
                     WebView(context).apply {
+                        if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, true)
+                        }
                         layoutParams = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT

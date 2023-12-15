@@ -1,6 +1,7 @@
 package com.jinyumeng.hosei_sakai.views.assignments_tab.detail
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
@@ -19,6 +20,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
+import androidx.webkit.WebSettingsCompat
+import androidx.webkit.WebViewFeature
+import androidx.webkit.WebViewFeature.isFeatureSupported
 import com.jinyumeng.hosei_sakai.hoppii.AssignmentsManager
 import com.jinyumeng.hosei_sakai.hoppii.remote.assignments.AssignmentAttachment
 import com.jinyumeng.hosei_sakai.hoppii.remote.assignments.AssignmentItem
@@ -47,6 +51,9 @@ fun AssignmentDetailView(assignment: AssignmentItem, navController: NavControlle
             AndroidView(
                 factory = { context ->
                     WebView(context).apply {
+                        if (isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
+                            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, true)
+                        }
                         layoutParams = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
                             ViewGroup.LayoutParams.WRAP_CONTENT
