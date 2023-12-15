@@ -40,6 +40,6 @@ Hoppii は [Sakai](https://www.sakailms.org) をベースして作った物な�
 
 ### 使用したパッケージ
 
-- [RetroFit](https://square.github.io/retrofit/): Restful API をアクセスするために使用している。
-- [Moshi](https://github.com/square/moshi): JSON を解読するために使用している。
-- [JSoup](https://jsoup.org): HTML を解読するために使用している。 
+- [RetroFit](https://square.github.io/retrofit/)：Restful API をアクセスするために使用している。
+- [Moshi](https://github.com/square/moshi)：JSON を解読するために使用している。
+- [JSoup](https://jsoup.org)：HTML を解読するために使用している。 
