@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -16,8 +17,11 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewFeature
 import androidx.webkit.WebViewFeature.isFeatureSupported
+import com.jinyumeng.hosei_sakai.hoppii.AssignmentsManager
 import com.jinyumeng.hosei_sakai.hoppii.HoppiiURLs
 import com.jinyumeng.hosei_sakai.hoppii.LoginManager
+import com.jinyumeng.hosei_sakai.hoppii.TimetableManager
+import com.jinyumeng.hosei_sakai.views.common.LoadingAnimationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
@@ -25,50 +29,47 @@ import org.jsoup.Jsoup
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun TimetableView(modifier: Modifier = Modifier) {
-    var url by remember { mutableStateOf(null as String?) }
+    var table by remember { mutableStateOf(null as List<List<String>>?) }
+    var noSunday by remember { mutableStateOf(false) }
+    var noSaturday by remember { mutableStateOf(false) }
 
-    suspend fun getTimetableURL(): String? = withContext(Dispatchers.IO) {
-        val cookieString = LoginManager.cookies
-        if (cookieString == null) {
-            Log.e("TimetableView", "No cookies while getting timetable URL")
-            return@withContext null
+    fun <T> transpose(list: List<List<T>>): List<List<T>> =
+        list.first().mapIndexed { index, _ ->
+            list.map { row -> row[index] }
         }
-
-        val cookies = cookieString.split(";").associate {
-            val (key, value) = it.split("=")
-            key to value
-        }
-        val doc = Jsoup.connect(HoppiiURLs.Home.string)
-            .cookies(cookies)
-            .timeout(60000)
-            .get()
-
-        val attachmentList = doc.getElementsByClass("Mrphs-toolBody--sakai-timetable")
-        val iframe = attachmentList.select("iframe").first()
-        val timetableURL = iframe?.attr("src")
-        Log.d("TimetableView", "Timetable URL: $timetableURL")
-        return@withContext timetableURL
-    }
 
     LaunchedEffect(Unit) {
-        url = getTimetableURL()
+        val newTable = TimetableManager.getTimetable()
+        newTable?.let {
+            var timetable = transpose(it)
+
+            if (timetable.isEmpty()) {
+                Log.e("TimetableView", "Failed to get timetable.")
+                return@let
+            }
+
+            val sunItem = timetable.first().reduce(String::plus)
+            if (sunItem.isEmpty()) {
+                noSunday = true
+                timetable = timetable.drop(1)
+            }
+            val satItem = timetable.last().reduce(String::plus)
+            if (satItem.isEmpty()) {
+                noSaturday = true
+                timetable = timetable.dropLast(1)
+            }
+            table = timetable
+        } ?: run {
+            Log.e("TimetableView", "Failed to get timetable.")
+        }
     }
 
-    AndroidView(factory = { context ->
-        WebView(context).apply {
-            if (isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, true)
-            }
-            layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
-            )
-            webViewClient = WebViewClient()
-            settings.javaScriptEnabled = true
-            url?.let { loadUrl(it) }
+    table?.let {
+        Surface(modifier = modifier) {
+            TimetableContentView(noSunday = noSunday, noSaturday = noSaturday, table = it)
         }
-    }, update = {
-        url?.let { it1 -> it.loadUrl(it1) }
-    }, modifier = modifier)
+    } ?: run {
+        LoadingAnimationView()
+    }
 
 }

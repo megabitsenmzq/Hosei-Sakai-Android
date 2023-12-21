@@ -39,7 +39,6 @@ fun TimetableContentView(
     noSaturday: Boolean,
     table: List<List<String>>
 ) {
-    val lineGray = Color(0xFFE5E5EA)
     @Composable
     fun VHeader(
         noSunday: Boolean,
@@ -58,7 +57,7 @@ fun TimetableContentView(
                 Box(modifier = Modifier
                     .weight(1f)
                     .height(20.dp)
-                    .border(0.5.dp, lineGray),
+                    .border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = text, fontSize = 10.sp, fontWeight = FontWeight.Bold)
@@ -73,13 +72,13 @@ fun TimetableContentView(
             Box(modifier = Modifier
                 .width(20.dp)
                 .height(20.dp)
-                .border(0.5.dp, lineGray),
+                .border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant),
             ) {}
             for (i in 1..size) {
                 Box(modifier = Modifier
                     .weight(1f)
                     .width(20.dp)
-                    .border(0.5.dp, lineGray),
+                    .border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(text = "$i", fontSize = 10.sp, fontWeight = FontWeight.Bold)
@@ -89,37 +88,38 @@ fun TimetableContentView(
     }
 
     @Composable
+    fun TableCell(cell: String, modifier: Modifier = Modifier) {
+        if (cell == "") {
+            Box(modifier = modifier
+                .fillMaxSize()
+                .border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant)
+            ) {}
+            return
+        }
+        Box(modifier = modifier
+            .border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant)
+            .padding(1.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(5.dp))
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(3.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(text = cell, color = MaterialTheme.colorScheme.onPrimary, fontSize = 10.sp)
+            }
+        }
+    }
+
+    @Composable
     fun TableBody(table: List<List<String>>) {
-        Column {
+        Row {
             for (row in table) {
-                Box(modifier = Modifier.weight(1f)) {
-                    Row {
-                        for (cell in row) {
-                            if (cell == "") {
-                                Box(modifier = Modifier
-                                    .fillMaxSize()
-                                    .weight(1f)
-                                    .border(0.5.dp, lineGray)
-                                ) {}
-                                continue
-                            }
-                            Box(modifier = Modifier
-                                .weight(1f)
-                                .border(0.5.dp, lineGray)
-                                .padding(1.dp),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Box(modifier = Modifier
-                                    .fillMaxSize()
-                                    .clip(RoundedCornerShape(5.dp))
-                                    .background(MaterialTheme.colorScheme.primary)
-                                    .padding(3.dp),
-                                    contentAlignment = Alignment.Center,
-                                ) {
-                                    Text(text = cell, color = MaterialTheme.colorScheme.onPrimary, fontSize = 10.sp)
-                                }
-                            }
-                        }
+                Column(modifier = Modifier.weight(1f)) {
+                    for (cell in row) {
+                        TableCell(cell = cell, modifier = Modifier.weight(1f))
                     }
                 }
             }
@@ -127,7 +127,7 @@ fun TimetableContentView(
     }
 
     val vSize = table.first().size
-    Row(modifier = Modifier.border(0.5.dp, Color.LightGray)) {
+    Row(modifier = Modifier.border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant)) {
         HHeader(size = vSize)
         Column() {
             VHeader(noSunday = noSunday, noSaturday = noSaturday)
@@ -145,39 +145,7 @@ fun TimetableContentViewPreview() {
         TimetableContentView(
             noSunday = false,
             noSaturday = false,
-            table = listOf(
-                listOf("", "", "", "", "", "", ""),
-                listOf("", "", "", "", "情報システムデザイン", "", ""),
-                listOf(
-                    "",
-                    "プロジェクト実習・制作２",
-                    "",
-                    "プロジェクト実習・制作２",
-                    "ＡＩプログラミング",
-                    "",
-                    ""
-                ),
-                listOf(
-                    "",
-                    "プロジェクト実習・制作２",
-                    "デザイン・バックキャスティン...",
-                    "プロジェクト実習・制作２",
-                    "ＡＩプログラミング",
-                    "",
-                    ""
-                ),
-                listOf(
-                    "",
-                    "",
-                    "デザイン・バックキャスティン...",
-                    "デザインケーススタディ",
-                    "",
-                    "",
-                    ""
-                ),
-                listOf("", "", "", "", "", "", ""),
-                listOf("", "", "", "", "", "", "")
-            )
+            table = listOf(listOf("", "", "", "", "", "", ""), listOf("", "", "プロジェクト実習・制作２", "プロジェクト実習・制作２", "", "", ""), listOf("", "", "", "デザイン・バックキャスティン...", "デザイン・バックキャスティン...", "", ""), listOf("", "", "プロジェクト実習・制作２", "プロジェクト実習・制作２", "デザインケーススタディ", "", ""), listOf("", "情報システムデザイン", "ＡＩプログラミング", "ＡＩプログラミング", "", "", ""), listOf("", "", "", "", "", "", ""), listOf("", "", "", "", "", "", ""))
         )
     }
 }
