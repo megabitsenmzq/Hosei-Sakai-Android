@@ -27,6 +27,9 @@ object LoginManager {
     var loginState by mutableStateOf(null as Boolean?)
         private set
     var currentUser by mutableStateOf(null as UserInfo?)
+        private set
+
+    var isDemo by mutableStateOf(null as Boolean?)
 
     private val moshi: Moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
@@ -89,6 +92,12 @@ object LoginManager {
 
     @OptIn(DelicateCoroutinesApi::class)
     fun refreshLoginState() {
+        if (isDemo == true) {
+            loginState = true
+            currentUser = DemoData.demoUser
+            Log.d("LoginManager", "Logged in as demo user")
+            return
+        }
         Log.d("LoginManager", "Refresh Login State")
         if (loginState == false) {
             loginState = null

@@ -118,6 +118,13 @@ object AssignmentsManager {
         refreshJob?.cancel()
         refreshing = true
         Log.d("AssignmentsManager", "Refresh Assignments")
+
+        if (LoginManager.isDemo == true) {
+            updateAssignments(DemoData.demoAssignments.toMutableList())
+            refreshing = false
+            return
+        }
+
         refreshJob = coroutineScope.launch {
             val newAssignments = requestAssignments()
 
@@ -156,8 +163,7 @@ object AssignmentsManager {
             }
 
             newAssignments.assignmentCollection = sortedAssignments.toMutableList()
-            savedAssignments = newAssignments
-            assignments = sortedAssignments
+            updateAssignments(newAssignments.assignmentCollection)
             refreshing = false
             Log.d("AssignmentsManager", "Assignments Refreshed")
         }
@@ -194,6 +200,10 @@ object AssignmentsManager {
     }
 
     suspend fun downloadAttachments(id: String): List<AssignmentAttachment>? = withContext(Dispatchers.IO) {
+        if (LoginManager.isDemo == true) {
+            return@withContext null
+        }
+
         val cookieString = LoginManager.cookies
         if (cookieString == null) {
             Log.e("AssignmentsManager", "No cookies while downloading attachment list")

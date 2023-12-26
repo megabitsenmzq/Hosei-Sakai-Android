@@ -140,6 +140,13 @@ fun LoginView() {
             onUsernameChange = { username = it },
             onPasswordChange = { password = it },
             loginAction = {
+                // Demo account.
+                if (username == "11N4514" && password == "password") {
+                    LoginManager.isDemo = true
+                    loginSuccess(cookies = "")
+                    return@LoginInterfaceView
+                }
+
                 webUsername = username
                 webPassword = password
                 setTimeoutTimer()
