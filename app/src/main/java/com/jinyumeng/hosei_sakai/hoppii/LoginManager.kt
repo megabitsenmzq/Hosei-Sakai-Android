@@ -87,6 +87,11 @@ object LoginManager {
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
+
+        if (username == "11N4514" && password == "password") {
+            isDemo = true
+        }
+
         refreshLoginState()
     }
 

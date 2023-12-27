@@ -29,10 +29,10 @@ object DemoData {
             context = "",
             dueTimeString = Date(),
             id = UUID.randomUUID().toString(),
-            instructions = "みなさん、よいお年を！",
+            instructions = "授業中の指示に従って、PDFを作って提出する。",
             status = "",
             submissionType = "",
-            title = "課題1",
+            title = "仕様書の提出",
             markAsFinished = false
         ),
         AssignmentItem(
@@ -41,10 +41,46 @@ object DemoData {
             context = "",
             dueTimeString = Date(),
             id = UUID.randomUUID().toString(),
-            instructions = "みなさん、よいお年を！",
+            instructions = "授業中の指示に従って、PDFを作って提出する。",
             status = "",
             submissionType = "",
-            title = "課題2",
+            title = "日報",
+            markAsFinished = false
+        ),
+        AssignmentItem(
+            author = "",
+            authorName = "先生太郎",
+            context = "",
+            dueTimeString = Date(),
+            id = UUID.randomUUID().toString(),
+            instructions = "授業中の指示に従って、PDFを作って提出する。",
+            status = "",
+            submissionType = "",
+            title = "作品タイトルの確認",
+            markAsFinished = false
+        ),
+        AssignmentItem(
+            author = "",
+            authorName = "先生太郎",
+            context = "",
+            dueTimeString = Date(),
+            id = UUID.randomUUID().toString(),
+            instructions = "授業中の指示に従って、PDFを作って提出する。",
+            status = "",
+            submissionType = "",
+            title = "相互評価シート",
+            markAsFinished = false
+        ),
+        AssignmentItem(
+            author = "",
+            authorName = "先生太郎",
+            context = "",
+            dueTimeString = Date(),
+            id = UUID.randomUUID().toString(),
+            instructions = "授業中の指示に従って、PDFを作って提出する。",
+            status = "",
+            submissionType = "",
+            title = "レポート1",
             markAsFinished = false
         )
     )
