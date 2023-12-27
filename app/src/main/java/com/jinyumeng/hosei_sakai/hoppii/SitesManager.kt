@@ -57,6 +57,14 @@ object SitesManager {
     fun refreshSites() {
         refreshJob?.cancel()
         refreshing = true
+
+        if (LoginManager.isDemo == true) {
+            sites = DemoData.demoSites.toMutableList()
+            savedSites = Sites(siteCollection = DemoData.demoSites.toMutableList())
+            refreshing = false
+            return
+        }
+
         Log.d("SitesManager", "Refresh Sites")
         refreshJob = coroutineScope.launch {
             val newSites = requestSites()
@@ -73,7 +81,7 @@ object SitesManager {
         }
     }
 
-    suspend fun requestSites(): Sites? {
+    private suspend fun requestSites(): Sites? {
         val interceptor = CookieInterceptor(cookies = LoginManager.cookies)
 
         val httpClient = OkHttpClient.Builder()

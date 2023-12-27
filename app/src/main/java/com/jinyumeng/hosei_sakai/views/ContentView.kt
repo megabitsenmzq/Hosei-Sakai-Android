@@ -86,7 +86,7 @@ fun ContentView() {
         Box(modifier = Modifier.padding(bottom = it.calculateBottomPadding())) {
             when (currentTab) {
                 0 -> AssignmentsView()
-//                1 -> SitesView()
+                1 -> SitesView()
 //                2 -> TimetableView(modifier = Modifier.statusBarsPadding())
                 3 -> SettingsView(modifier = Modifier.statusBarsPadding())
                 else -> {
