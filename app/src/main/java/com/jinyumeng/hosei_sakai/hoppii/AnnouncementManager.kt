@@ -19,6 +19,10 @@ object AnnouncementManager {
         .build()
 
     suspend fun requestAnnouncement(siteID: String): Announcements? {
+        if (LoginManager.isDemo == true) {
+            return Announcements(announcementCollection = DemoData.demoAnnouncements.toMutableList())
+        }
+
         val interceptor = CookieInterceptor(cookies = LoginManager.cookies)
 
         val httpClient = OkHttpClient.Builder()

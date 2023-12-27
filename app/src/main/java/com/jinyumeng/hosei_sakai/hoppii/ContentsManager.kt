@@ -19,6 +19,10 @@ object ContentsManager {
         .build()
 
     suspend fun requestContents(siteID: String): Contents? {
+//        if (LoginManager.isDemo == true) {
+//            return Contents(contentCollection = DemoData.demoContents.toMutableList())
+//        }
+
         val interceptor = CookieInterceptor(cookies = LoginManager.cookies)
 
         val httpClient = OkHttpClient.Builder()

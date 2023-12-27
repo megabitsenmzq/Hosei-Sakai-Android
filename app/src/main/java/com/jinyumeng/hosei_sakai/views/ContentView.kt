@@ -87,7 +87,7 @@ fun ContentView() {
             when (currentTab) {
                 0 -> AssignmentsView()
                 1 -> SitesView()
-//                2 -> TimetableView(modifier = Modifier.statusBarsPadding())
+                2 -> TimetableView(modifier = Modifier.statusBarsPadding())
                 3 -> SettingsView(modifier = Modifier.statusBarsPadding())
                 else -> {
                     Text("Error: Invalid Tab Index")

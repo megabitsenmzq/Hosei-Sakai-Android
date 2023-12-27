@@ -21,6 +21,7 @@ import com.jinyumeng.hosei_sakai.hoppii.AssignmentsManager
 import com.jinyumeng.hosei_sakai.hoppii.HoppiiURLs
 import com.jinyumeng.hosei_sakai.hoppii.LoginManager
 import com.jinyumeng.hosei_sakai.hoppii.TimetableManager
+import com.jinyumeng.hosei_sakai.hoppii.TimetableManager.transpose
 import com.jinyumeng.hosei_sakai.views.common.LoadingAnimationView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -33,15 +34,10 @@ fun TimetableView(modifier: Modifier = Modifier) {
     var noSunday by remember { mutableStateOf(false) }
     var noSaturday by remember { mutableStateOf(false) }
 
-    fun <T> transpose(list: List<List<T>>): List<List<T>> =
-        list.first().mapIndexed { index, _ ->
-            list.map { row -> row[index] }
-        }
-
     LaunchedEffect(Unit) {
         val newTable = TimetableManager.getTimetable()
         newTable?.let {
-            var timetable = transpose(it)
+            var timetable = it
 
             if (timetable.isEmpty()) {
                 Log.e("TimetableView", "Failed to get timetable.")

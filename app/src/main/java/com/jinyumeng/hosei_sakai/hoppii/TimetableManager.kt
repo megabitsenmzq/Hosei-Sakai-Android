@@ -6,10 +6,19 @@ import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 
 object TimetableManager {
+    fun <T> transpose(list: List<List<T>>): List<List<T>> =
+        List(list.first().size) { index ->
+            list.map { row -> row[index] }
+        }
 
     suspend fun getTimetable(): List<List<String>>? = withContext(Dispatchers.IO) {
+        if (LoginManager.isDemo == true) {
+            return@withContext DemoData.demoTimetable
+        }
+
         val url = getTimetablePageURL() ?: return@withContext null
-        return@withContext getTimetableList(url) ?: return@withContext null
+        val newTimeTable = getTimetableList(url) ?: return@withContext null
+        return@withContext transpose(newTimeTable)
     }
     suspend fun getTimetablePageURL(): String? = withContext(
         Dispatchers.IO) {
