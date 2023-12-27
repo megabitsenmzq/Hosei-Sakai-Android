@@ -128,6 +128,7 @@ fun AssignmentListView(assignmentList: List<AssignmentItem>, navController: NavC
                                     title = assignment.title,
                                     teacher = assignment.authorName ?: "Error",
                                     dueTime = assignment.dueTimeString,
+                                    shouldDim = assignment.markAsFinished,
                                     onClick = {
                                         navController.navigate("assignment_detail/${assignment.id}")
                                     }
@@ -160,7 +161,7 @@ fun AssignmentListView(assignmentList: List<AssignmentItem>, navController: NavC
                         ListSectionTitleView(title = "進行中")
                     }
                     AssignmentsListCellType.FinishedHeader -> {
-                        ListSectionTitleView(title = "完成")
+                        ListSectionTitleView(title = "完了")
                     }
                 }
             }

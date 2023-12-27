@@ -6,7 +6,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowRight
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -48,20 +50,31 @@ fun AssignmentListRowView(
     title: String,
     teacher: String,
     dueTime: Date,
+    shouldDim: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US)
     formatter.timeZone = TimeZone.getTimeZone("Asia/Tokyo")
     val due = formatter.format(calcSafeDue(dueTime))
-
+    val timeColor =  if (isDateSafe(dueTime)) Color.Unspecified else MaterialTheme.colorScheme.primary
     ListItem(
-        headlineContent = { Text(title) },
-        overlineContent = { Text(teacher) },
+        headlineContent = {
+            Text(
+                text = title,
+                color = if (shouldDim) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onSurface
+            )
+        },
+        overlineContent = {
+            Text(
+                text = teacher,
+                color = if (shouldDim) MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onSurface
+            )
+        },
         supportingContent = {
             Text(
                 text = due,
-                color = if (isDateSafe(dueTime)) Color.Unspecified else MaterialTheme.colorScheme.primary
+                color = if (shouldDim) timeColor.copy(alpha = 0.5f) else timeColor
             )
         },
         trailingContent = {
@@ -72,7 +85,7 @@ fun AssignmentListRowView(
         },
         modifier = modifier.clickable {
             onClick()
-        }
+        },
     )
 }
 
@@ -85,12 +98,14 @@ fun AssignmentListRowViewPreview() {
                 title = "課題タイトル",
                 teacher = "教師名",
                 dueTime = Date(),
+                shouldDim = false,
                 onClick = {}
             )
             AssignmentListRowView(
                 title = "課題タイトル",
                 teacher = "教師名",
                 dueTime = Date(),
+                shouldDim = true,
                 onClick = {}
             )
         }
