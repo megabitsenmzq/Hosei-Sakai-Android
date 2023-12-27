@@ -52,7 +52,8 @@ fun AssignmentDetailView(assignment: AssignmentItem, navController: NavControlle
                 factory = { context ->
                     WebView(context).apply {
                         if (isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, true)
+                            val darkMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, darkMode)
                         }
                         layoutParams = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,

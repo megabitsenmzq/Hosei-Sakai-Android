@@ -1,6 +1,7 @@
 package com.jinyumeng.hosei_sakai.views.sites_tab.detail.announcements
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -35,7 +36,8 @@ fun AnnouncementDetailView(announcement: AnnouncementItem, navController: NavCon
                 factory = { context ->
                     WebView(context).apply {
                         if (WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING)) {
-                            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, true)
+                            val darkMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+                            WebSettingsCompat.setAlgorithmicDarkeningAllowed(settings, darkMode)
                         }
                         layoutParams = ViewGroup.LayoutParams(
                             ViewGroup.LayoutParams.WRAP_CONTENT,
