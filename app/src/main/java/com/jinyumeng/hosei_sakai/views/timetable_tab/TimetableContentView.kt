@@ -129,7 +129,7 @@ fun TimetableContentView(
     val vSize = table.first().size
     Row(modifier = Modifier.border(0.5.dp, MaterialTheme.colorScheme.surfaceVariant)) {
         HHeader(size = vSize)
-        Column() {
+        Column {
             VHeader(noSunday = noSunday, noSaturday = noSaturday)
             Box(modifier = Modifier.weight(1f)) {
                 TableBody(table = table)

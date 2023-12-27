@@ -12,7 +12,6 @@ import com.jinyumeng.hosei_sakai.hoppii.remote.sites.SitesService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -22,7 +21,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 object SitesManager {
-    val coroutineScope = CoroutineScope(Dispatchers.Main)
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private var refreshJob: Job? = null
     var refreshing by mutableStateOf(null as Boolean?)
         private set
@@ -53,7 +52,6 @@ object SitesManager {
             LoginManager.sharedPreferences?.edit()?.putString("savedSites", jsonAdapter.toJson(value))?.apply()
         }
 
-    @OptIn(DelicateCoroutinesApi::class)
     fun refreshSites() {
         refreshJob?.cancel()
         refreshing = true

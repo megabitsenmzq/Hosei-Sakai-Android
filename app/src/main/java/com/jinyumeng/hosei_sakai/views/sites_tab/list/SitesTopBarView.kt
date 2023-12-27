@@ -13,7 +13,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.jinyumeng.hosei_sakai.hoppii.AssignmentsManager
 import com.jinyumeng.hosei_sakai.hoppii.SitesManager
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +22,7 @@ fun SitesTopBarView() {
         IconButton(onClick = {
             SitesManager.refreshSites()
         }) {
-            if (AssignmentsManager.refreshing == true) {
+            if (SitesManager.refreshing == true) {
                 CircularProgressIndicator(
                     modifier = Modifier
                         .progressSemantics()

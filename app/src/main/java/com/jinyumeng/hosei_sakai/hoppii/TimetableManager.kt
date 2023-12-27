@@ -20,7 +20,7 @@ object TimetableManager {
         val newTimeTable = getTimetableList(url) ?: return@withContext null
         return@withContext transpose(newTimeTable)
     }
-    suspend fun getTimetablePageURL(): String? = withContext(
+    private suspend fun getTimetablePageURL(): String? = withContext(
         Dispatchers.IO) {
         val cookieString = LoginManager.cookies
         if (cookieString == null) {
@@ -48,7 +48,7 @@ object TimetableManager {
         return@withContext url
     }
 
-    suspend fun getTimetableList(url: String) : List<List<String>>? = withContext(
+    private suspend fun getTimetableList(url: String) : List<List<String>>? = withContext(
         Dispatchers.IO) {
 
         val cookieString = LoginManager.cookies

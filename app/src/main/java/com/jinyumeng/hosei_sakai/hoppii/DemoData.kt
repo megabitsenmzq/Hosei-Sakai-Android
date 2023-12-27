@@ -1,11 +1,8 @@
 package com.jinyumeng.hosei_sakai.hoppii
 
 import com.jinyumeng.hosei_sakai.hoppii.remote.announcements.AnnouncementItem
-import com.jinyumeng.hosei_sakai.hoppii.remote.announcements.Announcements
 import com.jinyumeng.hosei_sakai.hoppii.remote.assignments.AssignmentItem
-import com.jinyumeng.hosei_sakai.hoppii.remote.assignments.Assignments
 import com.jinyumeng.hosei_sakai.hoppii.remote.contents.ContentItem
-import com.jinyumeng.hosei_sakai.hoppii.remote.contents.Contents
 import com.jinyumeng.hosei_sakai.hoppii.remote.sites.SiteItem
 import com.jinyumeng.hosei_sakai.hoppii.remote.user_info.UserInfo
 import java.util.Calendar
@@ -14,7 +11,7 @@ import java.util.UUID
 
 object DemoData {
 
-    fun addHoursToDate(date: Date, hours: Int): Date {
+    private fun addHoursToDate(date: Date, hours: Int): Date {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar.add(Calendar.HOUR, hours)
